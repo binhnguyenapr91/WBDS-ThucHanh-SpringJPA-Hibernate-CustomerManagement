@@ -21,6 +21,11 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import repository.CustomerRepository;
+import repository.impl.ICustomerRepository;
+import service.CustomerService;
+import service.impl.ICustomerService;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -36,6 +41,16 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         appContext = applicationContext;
+    }
+
+    @Bean
+    public CustomerRepository customerRepository(){
+        return new ICustomerRepository();
+    }
+
+    @Bean
+    public CustomerService customerService(){
+        return new ICustomerService();
     }
     //Thymeleaf Config
     @Bean
