@@ -13,13 +13,14 @@
         <thead>
             <th>FirstName</th>
             <th>Lastname</th>
-            <th>Functions</th>
+            <th colspan="2">Functions</th>
         </thead>
         <th:block th:each="customer: ${customers}" >
             <tr>
                 <td th:text="${customer.getFirstname()}"></td>
                 <td th:text="${customer.getLastname()}"></td>
                 <td><a th:href="@{/update-customer/{id}(id=${customer.getId()})}">EDIT</a></td>
+                <td><a th:href="@{/delete-customer/{id}(id=${customer.getId()})}">DELETE</a></td>
             </tr>
         </th:block>
     </table>
