@@ -1,12 +1,7 @@
 package service;
 
-import model.Customer;
+import repository.CustomerRepository;
 
-import java.util.List;
 
-public interface CustomerService {
-    List<Customer> getAll();
-    Customer getById(Long id);
-    void save(Customer customer);
-    void remove(Long id);
+public interface CustomerService extends CustomerRepository {
 }

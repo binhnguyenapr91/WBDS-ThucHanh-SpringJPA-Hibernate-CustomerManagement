@@ -1,49 +1,77 @@
 package repository.impl;
 
 import model.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import repository.CustomerRepository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.List;
+
 
 @Transactional
 public class ICustomerRepository implements CustomerRepository {
-    @PersistenceContext
-    private EntityManager em;
-
     @Override
-    public List<Customer> getAll() {
-        TypedQuery<Customer> query = em.createQuery("select c from Customer as c",Customer.class);
-        return query.getResultList();
+    public Iterable<Customer> findAll(Sort sort) {
+        return null;
     }
 
     @Override
-    public Customer getById(Long id) {
-        TypedQuery<Customer> query = em.createQuery("select c from Customer as c where c.id=:id" ,Customer.class);
-        query.setParameter("id",id);
-        try{
-            return query.getSingleResult();
-        }catch(NoResultException nre){
-            return null;
-        }
+    public Page<Customer> findAll(Pageable pageable) {
+        return null;
     }
 
     @Override
-    public void save(Customer model) {
-        if(model.getId()!=null){
-            em.merge(model);
-        }else em.persist(model);
+    public <S extends Customer> S save(S entity) {
+        return null;
     }
 
     @Override
-    public void remove(Long id) {
-        Customer customer = getById(id);
-        if (customer != null){
-            em.remove(customer);
-        }
+    public <S extends Customer> Iterable<S> save(Iterable<S> entities) {
+        return null;
+    }
+
+    @Override
+    public Customer findOne(Long aLong) {
+        return null;
+    }
+
+    @Override
+    public boolean exists(Long aLong) {
+        return false;
+    }
+
+    @Override
+    public Iterable<Customer> findAll() {
+        return null;
+    }
+
+    @Override
+    public Iterable<Customer> findAll(Iterable<Long> longs) {
+        return null;
+    }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void delete(Long aLong) {
+
+    }
+
+    @Override
+    public void delete(Customer entity) {
+
+    }
+
+    @Override
+    public void delete(Iterable<? extends Customer> entities) {
+
+    }
+
+    @Override
+    public void deleteAll() {
+
     }
 }

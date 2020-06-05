@@ -1,18 +1,16 @@
 package controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import service.CustomerService;
-
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 @Controller
 public class CustomerController {
@@ -37,16 +35,16 @@ public class CustomerController {
     }
 
     @GetMapping("/customers")
-    ModelAndView listingCustomer(){
+    ModelAndView listingCustomer(Pageable pageable){
         ModelAndView modelAndView = new ModelAndView("customer/listing");
-        List<Customer> customers = customerService.getAll();
+        Page<Customer> customers = customerService.findAll(pageable);
         modelAndView.addObject("customers",customers);
         return modelAndView;
     }
 
     @GetMapping("/update-customer/{id}")
     ModelAndView showUpdateForm(@PathVariable Long id){
-        Customer customer = customerService.getById(id);
+        Customer customer = customerService.findOne(id);
         if(customer!=null){
             ModelAndView modelAndView = new ModelAndView("customer/update");
             modelAndView.addObject("customer",customer);
@@ -69,7 +67,7 @@ public class CustomerController {
     @GetMapping("/delete-customer/{id}")
     ModelAndView showDeleteForm(@PathVariable Long id){
         Customer customer = new Customer();
-        customer = customerService.getById(id);
+        customer = customerService.findOne(id);
         if(customer!=null){
             ModelAndView modelAndView = new ModelAndView("customer/delete");
             modelAndView.addObject("customer",customer);
@@ -83,7 +81,7 @@ public class CustomerController {
 
     @PostMapping("/delete-customer")
     ModelAndView deleteCustomer(@ModelAttribute Customer customer){
-        customerService.remove(customer.getId());
+        customerService.delete(customer.getId());
         ModelAndView modelAndView = new ModelAndView("customer/delete");
         modelAndView.addObject("customer",customer);
         modelAndView.addObject("message","Delete customer successfully");
